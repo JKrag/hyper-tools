@@ -1,49 +1,18 @@
-echo "--- Containers ------------------------------------------------------"
-cont=`hyper ps -a`
-if [`wc -l <<< "$cont"` -gt 1 ]; then
-	echo "$cont"
-fi
+line='#########################################################################'
 
-echo "--- Volumes ---------------------------------------------------------"
-vol=`hyper volume ls`
-if [`wc -l <<< "$vol"` -gt 1 ]; then
-	echo "$vol"
-fi
+function exec_n_print_if_stuff_found {
+	res=`exec $2`
+	if [`wc -l <<< "$res"` -gt 1 ]; then
+		printf "######## %s %s\n" $1 "${line:${#1}}" 
+		echo "$res"
+	fi
+}
 
-echo "--- Images ----------------------------------------------------------"
-img=`hyper images`
-if [`wc -l <<< "$img"` -gt 1 ]; then
-	echo "$img"
-fi
-
-echo "--- FIP'S -----------------------------------------------------------"
-fips=`hyper fip ls`
-if [`wc -l <<< "$fips"` -gt 1 ]; then
-	echo "$fips"
-fi
-
-
-echo "--- Services --------------------------------------------------------"
-srv=`hyper service ls`
-if [`wc -l <<< "$srv"` -gt 1 ]; then
-	echo "$srv"
-fi
-
-echo "--- Cron ------------------------------------------------------------"
-crn=`hyper cron ls`
-if [`wc -l <<< "$crn"` -gt 1 ]; then
-	echo "$crn"
-fi
-
-echo "--- Security groups -------------------------------------------------"
-sgs=`hyper sg ls`
-if [`wc -l <<< "$sgs"` -gt 1 ]; then
-	echo "$sgs"
-fi
-
-
-echo "--- Snapshots -------------------------------------------------------"
-snap=`hyper snapshot ls`
-if [`wc -l <<< "$snap"` -gt 1 ]; then
-	echo "$snap"
-fi
+exec_n_print_if_stuff_found "Containers" "hyper ps -a" 
+exec_n_print_if_stuff_found "Volumes" "hyper volume ls" 
+exec_n_print_if_stuff_found "Images" "hyper images"
+exec_n_print_if_stuff_found "FIP'S" "hyper fip ls"
+exec_n_print_if_stuff_found "Services" "hyper service ls"
+exec_n_print_if_stuff_found "Cron" "hyper cron ls"
+exec_n_print_if_stuff_found "Security groups" "hyper sg ls"
+exec_n_print_if_stuff_found "Snapshots" "hyper snapshot ls"
