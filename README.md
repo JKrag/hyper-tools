@@ -7,35 +7,39 @@ This repo is for my helper scripts that make life easier when wroking with hyper
 Currently it contains the following scripts:
 
 ### hyper-list.sh
-List all allocated resources . Gives a good indication of what you might need to clean up to avoid paying more than needed.
+List all allocated resources. Gives a good indication of what you might need to clean up to avoid paying more than needed.
+
+The following are checked:
+- Containers
+- Volumes
+- Images
+- FIP'S
+- Services
+- Cron
+- Security groups
+- Snapshots
+
+Headlines are only printed for those objects where something is found.
 
 Example:
 ```
 > ./hyper-list.sh 
 
---- Containers ------------------------------------------------------
-CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES               PUBLIC IP
---- Volumes ---------------------------------------------------------
+######## Volumes ##################################################################
 DRIVER              VOLUME NAME         SIZE                CONTAINER
 hyper               neodata             10 GB               
 hyper               jenkinsdata         10 GB               
---- Images ----------------------------------------------------------
+######## Images ###################################################################
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-neo4j               3.0                 32771ba11b19        4 weeks ago         379.6 MB
+neo4j               3.0                 32771ba11b19        5 weeks ago         379.6 MB
 praqma/gh-pages     latest              13821430800e        6 months ago        1.332 GB
---- FIP'S -----------------------------------------------------------
+######## FIP'S ####################################################################
 Floating IP         Container           Service
-199.245.56.165                          
---- Services --------------------------------------------------------
-Name                FIP                 Containers          Status              Message
---- Cron ------------------------------------------------------------
-Name                Schedule            Image               Command
---- Security groups -------------------------------------------------
-Name                Description
---- Snapshots -------------------------------------------------------
-Snapshot Name       Volume              Size
----------------------------------------------------------------------
+200.100.50.10 
 ```
+
+Usage:
+I choose to symlink this script to /usr/local/bin/hl to make it fast and easy. The same could be done with an alias.
 
 ### hyper-clean.sh
 Delete all containers and all volumes. 
